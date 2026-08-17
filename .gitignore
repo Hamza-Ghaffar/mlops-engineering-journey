@@ -1,4 +1,5 @@
 /.venv
+.venv_v1_Trip_Planner
 *.bkp
 .$*
-
+.env
