@@ -1,0 +1,12 @@
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+/.venv
+.venv_v1_Trip_Planner/
+.venv_v1_Trip_Planner
+*.bkp
+.$*
+.env
