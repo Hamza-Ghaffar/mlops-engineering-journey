@@ -20,4 +20,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "Tip_Planner_v2.0_with_MCP.app:app", "--host", "0.0.0.0", "--port", "8000"]
