@@ -59,7 +59,7 @@ if not GROQ_API_KEY:
 # LLM - model configurable via GROQ_MODEL env var
 # =========================
 llm = ChatGroq(
-    model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
+    model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
     api_key=GROQ_API_KEY,
 )
 
