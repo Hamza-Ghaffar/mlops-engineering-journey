@@ -56,10 +56,10 @@ if not GROQ_API_KEY:
     raise ValueError("GROQ_API_KEY is missing. Please add it to your .env file.")
 
 # =========================
-# LLM - original model kept
+# LLM - model configurable via GROQ_MODEL env var
 # =========================
 llm = ChatGroq(
-    model="qwen/qwen3.6-27b",
+    model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
     api_key=GROQ_API_KEY,
 )
 
