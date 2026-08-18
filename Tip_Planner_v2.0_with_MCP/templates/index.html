@@ -2,136 +2,302 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>TripMate AI</title>
-
+    <title>TripMate AI — Multi-Agent Travel Planner</title>
+    <meta name="description" content="AI-powered multi-agent travel planner. Flights, hotels, weather and itinerary — all from one natural-language request." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/style.css" />
   </head>
 
   <body>
-    <div class="page-bg">
-      <div class="gradient-circle circle-1"></div>
-      <div class="gradient-circle circle-2"></div>
-      <div class="gradient-circle circle-3"></div>
-    </div>
 
-    <main class="app-container">
-      <section class="hero-section">
-        <div class="badge">
-          ✈️ TripMate AI — A Multi-Agent Travel Planner with LangGraph with MCP
-        </div>
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-split">
 
-        <h1>Plan Your Perfect Trip with AI</h1>
+          <!-- Left: editorial text -->
+          <div class="hero-left">
+            <div class="hero-tag">
+              <span class="tag-dot"></span>
+              MCP · LangGraph · Groq
+            </div>
 
-        <p>
-          Search flights, discover hotels, and generate a complete travel
-          itinerary using a multi-agent LangGraph system.
-        </p>
-      </section>
+            <h1>
+              Your AI<br />
+              <span class="h1-accent">Travel</span><br />
+              Planner
+            </h1>
 
-      <section class="planner-card">
-        <div class="card-header">
-          <div>
-            <h2>Where do you want to go?</h2>
-            <p>
-              Example: Plan a complete 7 days Japan trip from Bangladesh under 2
-              lakhs.
+            <p class="hero-desc">
+              Describe your trip once. Five AI agents search flights, hotels,
+              and live weather via MCP — and return a complete itinerary in
+              seconds.
             </p>
+
+            <a href="#planner" class="hero-cta-btn">Start Planning ↓</a>
+
+            <div class="hero-author">
+              By <strong>Hamza Ghaffar</strong>
+              <span class="author-sep">·</span>
+              <a href="mailto:hamza.ghaffar@hotmail.com">hamza.ghaffar@hotmail.com</a>
+            </div>
           </div>
 
-          <div class="status-pill">
-            <span class="status-dot"></span>
-            Online
+          <!-- Right: dark agent-pipeline card -->
+          <div class="hero-right">
+            <div class="pipeline-card">
+              <div class="pipeline-label">Agent Pipeline</div>
+
+              <div class="pipeline-steps">
+                <div class="p-step">
+                  <span class="p-icon">💬</span>
+                  <div class="p-info">
+                    <span class="p-name">User Query</span>
+                    <span class="p-detail">Natural language input</span>
+                  </div>
+                </div>
+                <div class="p-connector"></div>
+                <div class="p-step">
+                  <span class="p-icon">✈️</span>
+                  <div class="p-info">
+                    <span class="p-name">Flight Agent</span>
+                    <span class="p-detail">MCP → AviationStack</span>
+                  </div>
+                </div>
+                <div class="p-connector"></div>
+                <div class="p-step">
+                  <span class="p-icon">🏨</span>
+                  <div class="p-info">
+                    <span class="p-name">Hotel Agent</span>
+                    <span class="p-detail">MCP → Tavily Search</span>
+                  </div>
+                </div>
+                <div class="p-connector"></div>
+                <div class="p-step">
+                  <span class="p-icon">🌤️</span>
+                  <div class="p-info">
+                    <span class="p-name">Weather Agent</span>
+                    <span class="p-detail">MCP → OpenWeather</span>
+                  </div>
+                </div>
+                <div class="p-connector"></div>
+                <div class="p-step">
+                  <span class="p-icon">📝</span>
+                  <div class="p-info">
+                    <span class="p-name">Itinerary Agent</span>
+                    <span class="p-detail">Groq LLM synthesis</span>
+                  </div>
+                </div>
+                <div class="p-connector"></div>
+                <div class="p-step active">
+                  <span class="p-icon">✅</span>
+                  <div class="p-info">
+                    <span class="p-name">Travel Plan</span>
+                    <span class="p-detail">Full formatted report</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pipeline-stats">
+                <div class="p-stat">
+                  <span class="p-stat-val">5</span>
+                  <span class="p-stat-key">Agents</span>
+                </div>
+                <div class="p-stat">
+                  <span class="p-stat-val">3</span>
+                  <span class="p-stat-key">MCP Servers</span>
+                </div>
+                <div class="p-stat">
+                  <span class="p-stat-val">Live</span>
+                  <span class="p-stat-key">Real-time Data</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ARCHITECTURE STRIP ═══ -->
+    <section class="arch-section">
+      <div class="container">
+        <div class="section-label">Architecture</div>
+        <h2 class="section-title">How the Agents Use MCP Tools</h2>
+        <p class="section-desc">
+          Each agent calls a live MCP server through
+          <code>langchain-mcp-adapters</code>. LangGraph routes the state
+          automatically from agent to agent.
+        </p>
+
+        <div class="flow-wrapper">
+          <div class="flow-row">
+            <div class="flow-node fn-input">
+              <span class="fn-icon">💬</span>
+              <span class="fn-label">User Query</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-process">
+              <span class="fn-icon">⚡</span>
+              <span class="fn-label">FastAPI</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-ai">
+              <span class="fn-icon">🔀</span>
+              <span class="fn-label">LangGraph<br/>StateGraph</span>
+            </div>
+          </div>
+
+          <div class="flow-down-arrow">↓</div>
+
+          <div class="flow-row agents-row">
+            <div class="flow-node fn-agent">
+              <span class="fn-icon">✈️</span>
+              <span class="fn-label">Flight Agent</span>
+              <span class="fn-tag">MCP: AviationStack</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-agent">
+              <span class="fn-icon">🏨</span>
+              <span class="fn-label">Hotel Agent</span>
+              <span class="fn-tag">MCP: Tavily</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-agent">
+              <span class="fn-icon">🌤️</span>
+              <span class="fn-label">Weather Agent</span>
+              <span class="fn-tag">MCP: OpenWeather</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-agent">
+              <span class="fn-icon">📝</span>
+              <span class="fn-label">Itinerary Agent</span>
+              <span class="fn-tag">LLM: Groq</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-output">
+              <span class="fn-icon">✅</span>
+              <span class="fn-label">Final Agent</span>
+              <span class="fn-tag">LLM: Groq</span>
+            </div>
+          </div>
+
+          <div class="flow-down-arrow">↓</div>
+
+          <div class="flow-row">
+            <div class="flow-node fn-data">
+              <span class="fn-icon">🗄️</span>
+              <span class="fn-label">PostgreSQL<br/>Checkpointer</span>
+            </div>
+            <div class="flow-arrow">›</div>
+            <div class="flow-node fn-output glow">
+              <span class="fn-icon">📋</span>
+              <span class="fn-label">Travel Report</span>
+            </div>
           </div>
         </div>
 
-        <div class="input-area">
-          <textarea
-            id="userInput"
-            placeholder="Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs..."
-          ></textarea>
-
-          <button id="sendBtn" onclick="sendMessage()">
-            <span id="btnText">Generate Plan</span>
-            <span id="btnLoader" class="loader hidden"></span>
-          </button>
+        <div class="mcp-legend">
+          <div class="legend-item">
+            <span class="legend-dot blue"></span>Tavily — HTTP/SSE cloud
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot purple"></span>AviationStack — stdio via uvx
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot green"></span>OpenWeather — stdio custom FastMCP
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="quick-prompts">
-          <button
-            onclick="
-              setPrompt(
-                'Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs.',
-              )
-            "
-          >
-            Japan Trip
-          </button>
+    <!-- ═══ PLANNER ═══ -->
+    <section id="planner" class="planner-section">
+      <div class="container">
 
-          <button
-            onclick="
-              setPrompt(
-                'Plan a 5 days Dubai trip from Dhaka with flights, hotels and sightseeing.',
-              )
-            "
-          >
-            Dubai Trip
-          </button>
-
-          <button
-            onclick="
-              setPrompt(
-                'Plan a 7 days Thailand trip from Bangladesh with budget hotels and sightseeing.',
-              )
-            "
-          >
-            Thailand Trip
-          </button>
-
-          <button onclick="setPrompt('Give me all country flight info.')">
-            Global Flights
-          </button>
-        </div>
-      </section>
-
-      <section id="resultSection" class="result-section hidden">
-        <div class="result-header">
-          <div>
-            <h2>Your AI Travel Plan</h2>
-            <p id="threadInfo">Thread ID: -</p>
+        <div class="planner-card">
+          <div class="card-header">
+            <div class="card-header-text">
+              <h2>Where do you want to go?</h2>
+              <p>Describe your trip — destination, duration, budget, departure city.</p>
+            </div>
+            <div class="status-pill">
+              <span class="status-dot"></span>
+              Online
+            </div>
           </div>
 
-          <div class="result-actions">
-            <button class="copy-btn" onclick="copyResult()">Copy</button>
+          <div class="input-area">
+            <textarea
+              id="userInput"
+              placeholder="Plan a complete 7-day Japan trip from Dhaka including flights, hotels and sightseeing under $2000…"
+            ></textarea>
 
-            <button class="download-btn" onclick="downloadPDF()">
-              Download PDF
+            <button id="sendBtn" onclick="sendMessage()">
+              <span id="btnText">Generate Plan</span>
+              <span id="btnLoader" class="loader hidden"></span>
             </button>
           </div>
+
+          <div class="quick-prompts">
+            <button onclick="setPrompt('Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs.')">
+              ✈️ Japan Trip
+            </button>
+            <button onclick="setPrompt('Plan a 5 days Dubai trip from Dhaka with flights, hotels and sightseeing.')">
+              🏙️ Dubai Trip
+            </button>
+            <button onclick="setPrompt('Plan a 7 days Thailand trip from Bangladesh with budget hotels and sightseeing.')">
+              🌴 Thailand Trip
+            </button>
+            <button onclick="setPrompt('Give me all country flight info from Bangladesh.')">
+              🌍 Global Flights
+            </button>
+          </div>
+
+          <p class="shortcut-hint">Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to generate</p>
         </div>
 
-        <div id="pdfContent" class="pdf-content">
-          <h1 class="pdf-title">AI Travel Plan</h1>
-          <div id="resultBox" class="result-box"></div>
-        </div>
-      </section>
+        <!-- Result -->
+        <div id="resultSection" class="result-section hidden">
+          <div class="result-header">
+            <div>
+              <h2>Your AI Travel Plan</h2>
+              <p id="threadInfo" class="thread-info">Thread ID: —</p>
+            </div>
+            <div class="result-actions">
+              <button class="btn-secondary" onclick="copyResult()">Copy</button>
+              <button class="btn-primary" onclick="downloadPDF()">Download PDF</button>
+            </div>
+          </div>
 
-      <section id="errorBox" class="error-box hidden"></section>
-    </main>
+          <div id="pdfContent" class="pdf-content">
+            <h1 class="pdf-title">AI Travel Plan</h1>
+            <div id="resultBox" class="result-box"></div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorBox" class="error-box hidden"></div>
+
+      </div>
+    </section>
 
     <footer>
-      Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily and AviationStack
+      <div class="footer-inner">
+        <span>TripMate AI v2.0</span>
+        <span class="footer-sep">·</span>
+        <span>Built by <strong>Hamza Ghaffar</strong></span>
+        <span class="footer-sep">·</span>
+        <a href="mailto:hamza.ghaffar@hotmail.com" class="footer-email">hamza.ghaffar@hotmail.com</a>
+        <span class="footer-sep">·</span>
+        <span>FastAPI · LangGraph · MCP · Groq</span>
+      </div>
     </footer>
 
-    <!-- Markdown Renderer -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <!-- PDF Download Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <!-- Your Custom JS -->
     <script src="/static/script.js"></script>
   </body>
 </html>
+

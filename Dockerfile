@@ -11,12 +11,17 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv so that uvx is available for the aviationstack-mcp stdio server
+RUN pip install --no-cache-dir uv
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+WORKDIR /app/Tip_Planner_v2.0_with_MCP
 
 EXPOSE 8000
 

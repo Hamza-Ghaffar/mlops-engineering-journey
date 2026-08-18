@@ -111,7 +111,7 @@ function copyResult() {
   navigator.clipboard
     .writeText(text)
     .then(() => {
-      const copyBtn = document.querySelector(".copy-btn");
+      const copyBtn = document.querySelector(".btn-secondary");
       const oldText = copyBtn.textContent;
 
       copyBtn.textContent = "Copied!";
@@ -133,7 +133,7 @@ function downloadPDF() {
     return;
   }
 
-  const downloadBtn = document.querySelector(".download-btn");
+  const downloadBtn = document.querySelector(".btn-primary");
   const oldText = downloadBtn.textContent;
 
   downloadBtn.textContent = "Preparing PDF...";
