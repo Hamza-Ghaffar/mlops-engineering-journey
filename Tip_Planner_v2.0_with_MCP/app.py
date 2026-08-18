@@ -1,35 +1,47 @@
-from pathlib import Path # 
-import traceback # 
-import uvicorn #
+from pathlib import Path
+import traceback
+import uvicorn
 
-from fastapi import FastAPI, Request #
-from fastapi.responses import HTMLResponse, JSONResponse #
-from fastapi.staticfiles import StaticFiles #
-from fastapi.templating import Jinja2Templates #
-from pydantic import BaseModel #
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 
-from backend import run_travel_agent #
+from backend import run_travel_agent
+
+# This is to allow nested event loops for async calls in FastAPI
+import nest_asyncio
+nest_asyncio.apply()
+
+
+BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI(
     title="Automatic Trip Planner",
-    description="LangGraph Multi-Agent Travel Planner with FastAPI  static Frontend",
-    version="1.0.0"
+    description="LangGraph Multi-Agent Travel Planner with FastAPI  static Frontend with LangChain MCP",
+    version="1.02.0"
 )
+
 
 app.mount(
     "/static",
-    StaticFiles(directory=str(Path(__file__).parent / "static")),
+    StaticFiles(directory=str(BASE_DIR / "static")),
     name="static"
 )
 
+
 templates = Jinja2Templates(
-    directory=str(Path(__file__).parent / "templates")
+    directory=str(BASE_DIR / "templates")
 )
+
+
 
 class TravelRequest(BaseModel):
     message: str
     thread_id: str | None = None
-    
+
+
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
