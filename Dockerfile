@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install uv so uvx is available for the aviationstack-mcp stdio server
+RUN pip install --no-cache-dir uv
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade pip
@@ -18,6 +21,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Change into the app subdirectory so uvicorn finds app.py directly
+# and all internal imports (backend, mcp_client, tools) resolve correctly
+WORKDIR /app/Tip_Planner_v2.0_with_MCP
+
 EXPOSE 8000
 
-CMD ["uvicorn", "Tip_Planner_v2.0_with_MCP.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
